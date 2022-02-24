@@ -15,7 +15,7 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
     <>
       <div><h3>Vnitřní teplota:</h3> {data.indoorTemp}°C</div>
       <div><h3>Venkovní teplota:</h3> {data.outdoorTemp}°C</div>
-      <div><h3>Teplota procesoru:</h3> {data.cpuTemp}%</div>
+      <div><h3>Teplota procesoru:</h3> {data.cpuTemp}°C</div>
       <div><h3>Tlak:</h3> {data.pressure}hPa</div>
       <div><h3>Vlhkost:</h3> {data.humidity}%</div>
     </>
