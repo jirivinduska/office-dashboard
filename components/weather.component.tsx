@@ -13,10 +13,10 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
   if (!data) return <div>loading...</div>;
   return (
     <>
-      <div>Vnitřní teplota: {data.indoorTemp}°C</div>
-      <div>Venkovní templota: {data.outdoorTemp}°C</div>
-      <div>Tlak: {data.pressure}hPa</div>
-      <div>Vlhkost: {data.humidity}%</div>
+      <div><h3>Vnitřní teplota:</h3> {data.indoorTemp}°C</div>
+      <div><h3>Venkovní teplota:</h3> {data.outdoorTemp}°C</div>
+      <div><h3>Tlak:</h3> {data.pressure}hPa</div>
+      <div><h3>Vlhkost:</h3> {data.humidity}%</div>
     </>
   );
 };

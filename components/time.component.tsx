@@ -1,4 +1,5 @@
 import { useState, useEffect, FunctionComponent } from "react";
+import styles from "../styles/Time.module.css";
 
 export const Time: FunctionComponent<{}> = () => {
   const [time, setTime] = useState(Date.now());
@@ -13,8 +14,10 @@ export const Time: FunctionComponent<{}> = () => {
 
   return (
     <>
-      <div>{date.toLocaleDateString()}</div>
-      <div>{date.toLocaleTimeString()}</div>
+    <div className={styles.clock}>
+      <h3>{date.toLocaleDateString()}</h3>
+      <h1>{date.toLocaleTimeString()}</h1>
+      </div>
     </>
   );
 };
