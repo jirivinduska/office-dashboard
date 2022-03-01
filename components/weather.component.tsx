@@ -7,7 +7,7 @@ const fetcher = (url: string) =>
   axios.get<Weather>(url).then((res) => res.data);
 
 export const WeatherComponent: FunctionComponent<{}> = () => {
-  const { data, error } = useSWR("/api/weather", fetcher, { refreshInterval: 60000 });
+  const { data, error } = useSWR("/api/weather", fetcher, { refreshInterval: 30000 });
 
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
