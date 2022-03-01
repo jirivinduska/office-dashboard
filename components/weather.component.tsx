@@ -13,11 +13,12 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
   if (!data) return <div>loading...</div>;
   return (
     <>
-      <div><h3>Vnitřní teplota:</h3> {data.indoorTemp}°C</div>
-      <div><h3>Venkovní teplota:</h3> {data.outdoorTemp}°C</div>
-      <div><h3>Teplota procesoru:</h3> {data.cpuTemp}°C</div>
-      <div><h3>Tlak:</h3> {data.pressure}hPa</div>
-      <div><h3>Vlhkost:</h3> {data.humidity}%</div>
+      <div><h2>Vnitřní teplota:</h2><h3> {data.indoorTemp}°C</h3></div>
+      <div><h2>Venkovní teplota:</h2><h3> {data.outdoorTemp}°C</h3></div>
+      <div><h2>Teplota procesoru:</h2><h3> {data.cpuTemp}°C</h3></div>
+      <div><h2>Tlak:</h2><h3> {data.pressure}hPa</h3></div>
+      <div><h2>Vlhkost:</h2><h3> {data.humidity}%</h3></div>
+      <div><h2>Čas měření:</h2><h3> {new Date(data.created).toLocaleDateString()} {new Date(data.created).toLocaleTimeString()}</h3></div>
     </>
   );
 };

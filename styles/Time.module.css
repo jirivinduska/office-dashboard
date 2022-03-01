@@ -8,4 +8,9 @@
 }
 .clock > h1 {
   font-family: "Orbitron", sans-serif;
+  font-size: 4em;
+}
+
+.clock > h3 {
+  font-size: 2em;
 }

@@ -15,8 +15,8 @@ export const Time: FunctionComponent<{}> = () => {
   return (
     <>
     <div className={styles.clock}>
-      <h3>{date.toLocaleDateString()}</h3>
-      <h1>{date.toLocaleTimeString()}</h1>
+      <h3>{date.toLocaleDateString('cs-CZ')}</h3>
+      <h1>{date.toLocaleTimeString('cs-CZ')}</h1>
       </div>
     </>
   );
