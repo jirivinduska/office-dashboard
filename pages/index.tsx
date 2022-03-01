@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { Color } from "../components/colors.component";
+import { ColorComponent } from "../components/colors.component";
 import { Time } from "../components/time.component";
 import { WeatherComponent } from "../components/weather.component";
 import styles from "../styles/Home.module.css";
@@ -24,7 +24,7 @@ const Home: NextPage = () => {
             <WeatherComponent />
           </div>
           <div className={styles.card}>
-            <Color />
+            <ColorComponent />
           </div>
         </div>
       </main>

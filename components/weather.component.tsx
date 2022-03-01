@@ -1,7 +1,8 @@
 import axios from "axios";
-import { useState, useEffect, FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import useSWR from "swr";
 import { Weather } from "../src/entity/weather.model";
+import styles from "../styles/Weather.module.css";
 
 const fetcher = (url: string) =>
   axios.get<Weather>(url).then((res) => res.data);
@@ -12,13 +13,13 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
   if (error) return <div>failed to load</div>;
   if (!data) return <div>loading...</div>;
   return (
-    <>
-      <div><h2>Vnitřní teplota:</h2><h3> {data.indoorTemp}°C</h3></div>
-      <div><h2>Venkovní teplota:</h2><h3> {data.outdoorTemp}°C</h3></div>
-      <div><h2>Teplota procesoru:</h2><h3> {data.cpuTemp}°C</h3></div>
-      <div><h2>Tlak:</h2><h3> {data.pressure}hPa</h3></div>
-      <div><h2>Vlhkost:</h2><h3> {data.humidity}%</h3></div>
-      <div><h2>Čas měření:</h2><h3> {new Date(data.created).toLocaleDateString()} {new Date(data.created).toLocaleTimeString()}</h3></div>
-    </>
+    <div className={styles.weather}>
+      <div><h3>Vnitřní teplota:</h3><h4> {data.indoorTemp}°C</h4></div>
+      <div><h3>Venkovní teplota:</h3><h4> {data.outdoorTemp}°C</h4></div>
+      <div><h3>Teplota procesoru:</h3><h4> {data.cpuTemp}°C</h4></div>
+      <div><h3>Tlak:</h3><h4> {data.pressure}hPa</h4></div>
+      <div><h3>Vlhkost:</h3><h4> {data.humidity}%</h4></div>
+      <div><h3>Čas měření:</h3><h4> {new Date(data.created).toLocaleDateString('cs-CZ')} {new Date(data.created).toLocaleTimeString()}</h4></div>
+    </div>
   );
 };

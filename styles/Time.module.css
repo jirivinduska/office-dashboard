@@ -4,7 +4,7 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  min-width: 10em;
+  min-width: 20em;
 }
 .clock > h1 {
   font-family: "Orbitron", sans-serif;

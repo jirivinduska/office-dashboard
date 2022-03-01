@@ -1,4 +1,5 @@
 import { getConnection, createConnection } from "typeorm";
+import { Color } from "../entity/color.model";
 import { Weather } from "../entity/weather.model";
 
 export async function getOrCreateConnection() {
@@ -17,7 +18,7 @@ export async function getOrCreateConnection() {
             password: process.env.MYSQL_PASSWORD,
             database: process.env.MYSQL_DATABASE,
             entities: [
-                Weather,
+                Weather,Color
             ],
             logging: false,
             timezone:'Z'

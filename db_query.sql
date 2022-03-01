@@ -1,0 +1,1 @@
+create table color(id bigint not null AUTO_INCREMENT,color_hex varchar(255),created timestamp not null default CURRENT_TIMESTAMP, primary key (id))
