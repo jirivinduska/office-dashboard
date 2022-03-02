@@ -10,7 +10,7 @@ const defaultColor = "#000000";
 
 export const ColorComponent: FunctionComponent<{}> = () => {
   const { data, error, mutate } = useSWR("/api/color", fetcher, {
-    refreshInterval: 1000,
+    refreshInterval: 5000,
   });
 
   const [showPicker, setShowPicker] = useState<boolean>(false);
