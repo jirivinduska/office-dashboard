@@ -59,6 +59,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
           backgroundColor: color,
           height: "200px",
           width: "200px",
+          borderRadius: "5px"
         }}
         onClick={handleClick}
       ></div>
