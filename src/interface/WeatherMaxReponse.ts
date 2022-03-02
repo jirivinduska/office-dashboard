@@ -7,7 +7,14 @@ export interface WeatherMaxMinResponse {
   created: Date;
 }
 
-export interface MaxMin {
+export interface MaxMinNumber {
   max: number;
   min: number;
 }
+
+export interface MaxMinDate {
+  max: Date;
+  min: Date;
+}
+
+export type MaxMin = { values: MaxMinNumber; dates: MaxMinDate };
