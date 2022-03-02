@@ -1,9 +1,9 @@
 import axios from "axios";
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import useSWR from "swr";
 import { Color } from "../src/entity/color.model";
-import { ColorRequest } from "../src/interface/ColorRequest";
-
+import { ChromePicker } from "react-color";
+import styles from '../styles/Color.module.css'
 const fetcher = (url: string) => axios.get<Color>(url).then((res) => res.data);
 const defaultColor = "#000000";
 
@@ -12,12 +12,20 @@ export const ColorComponent: FunctionComponent<{}> = () => {
     refreshInterval: 1000,
   });
 
-  const generateColor = () => {
+  const [showPicker, setShowPicker] = useState<boolean>(false);
+
+  const handleClose = () => {
+    setShowPicker(false);
+  };
+
+  const handleClick = () => {
+    setShowPicker(!showPicker);
+  };
+
+  const sendColor = (colorHex: string) => {
     axios
       .post<Color>("/api/color", {
-        color:
-          "#" +
-          (0x1000000 + Math.random() * 0xffffff).toString(16).substring(0, 6),
+        color: colorHex,
       })
       .then((res) => {
         if (data) {
@@ -40,8 +48,15 @@ export const ColorComponent: FunctionComponent<{}> = () => {
           height: "200px",
           width: "200px",
         }}
-        onClick={generateColor}
+        onClick={handleClick}
       ></div>
+      {showPicker ? (<div className={styles.popover}>
+        <div className={styles.cover} onClick={handleClose}/>
+        <ChromePicker
+          color={color}
+          onChange={(color) => sendColor(color.hex)}
+        /></div>
+      ) : null}
     </>
   );
 };
