@@ -13,7 +13,7 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
   });
   const { data: minMaxData, error: minMaxError } =
     useSWR<WeatherMaxMinResponse>("/api/weather-max", fetcher, {
-      revalidateOnFocus: true,
+      refreshInterval: 600000,
     });
 
   if (error || minMaxError) return <div>failed to load</div>;
