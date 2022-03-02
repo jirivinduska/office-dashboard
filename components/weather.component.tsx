@@ -2,24 +2,66 @@ import axios from "axios";
 import { FunctionComponent } from "react";
 import useSWR from "swr";
 import { Weather } from "../src/entity/weather.model";
+import { WeatherMaxMinResponse } from "../src/interface/WeatherMaxReponse";
 import styles from "../styles/Weather.module.css";
 
-const fetcher = (url: string) =>
-  axios.get<Weather>(url).then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export const WeatherComponent: FunctionComponent<{}> = () => {
-  const { data, error } = useSWR("/api/weather", fetcher, { refreshInterval: 30000 });
+  const { data, error } = useSWR<Weather>("/api/weather", fetcher, {
+    refreshInterval: 30000,
+  });
+  const { data: minMaxData, error: minMaxError } =
+    useSWR<WeatherMaxMinResponse>("/api/weather-max", fetcher, {
+      revalidateOnFocus: true,
+    });
 
-  if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (error || minMaxError) return <div>failed to load</div>;
+  if (!data || !minMaxData) return <div>loading...</div>;
   return (
     <div className={styles.weather}>
-      <div><h3>Vnitřní teplota:</h3><h4> {data.indoorTemp}°C</h4></div>
-      <div><h3>Venkovní teplota:</h3><h4> {data.outdoorTemp}°C</h4></div>
-      <div><h3>Teplota procesoru:</h3><h4> {data.cpuTemp}°C</h4></div>
-      <div><h3>Tlak:</h3><h4> {data.pressure}hPa</h4></div>
-      <div><h3>Vlhkost:</h3><h4> {data.humidity}%</h4></div>
-      <div><h3>Čas měření:</h3><h4> {new Date(data.created).toLocaleDateString('cs-CZ')} {new Date(data.created).toLocaleTimeString()}</h4></div>
+      <div>
+        <h3>Vnitřní teplota:</h3>
+        <div className={styles.text}>
+          <div className={styles.mainText}> {data.indoorTemp}°C</div>
+          <div className={styles.minorText}> ↑{minMaxData.indoorTemp.values.max} ↓{minMaxData.indoorTemp.values.min}</div>
+        </div>
+      </div>
+      <div>
+        <h3>Venkovní teplota:</h3>
+        <div className={styles.text}>
+          <div className={styles.mainText}> {data.outdoorTemp}°C</div>
+          <div className={styles.minorText}> ↑{minMaxData.outdoorTemp.values.max} ↓{minMaxData.outdoorTemp.values.min}</div>
+        </div>
+      </div>
+      <div>
+        <h3>Teplota procesoru:</h3>
+        <div className={styles.text}>
+          <div className={styles.mainText}> {data.cpuTemp}°C</div>
+          <div className={styles.minorText}> ↑{minMaxData.cpuTemp.values.max} ↓{minMaxData.cpuTemp.values.min}</div>
+        </div>
+      </div>
+      <div>
+        <h3>Tlak:</h3>
+        <div className={styles.text}>
+          <div className={styles.mainText}> {data.pressure}hPa</div>
+          <div className={styles.minorText}> ↑{minMaxData.pressure.values.max} ↓{minMaxData.pressure.values.min}</div>
+        </div>
+      </div>
+      <div>
+        <h3>Vlhkost:</h3>
+        <div className={styles.text}>
+          <div className={styles.mainText}> {data.humidity}%</div>
+          <div className={styles.minorText}> ↑{minMaxData.humidity.values.max} ↓{minMaxData.humidity.values.min}</div>
+        </div>
+      </div>
+      <div>
+        <h3>Čas měření:</h3>
+        <div className={styles.mainText}>
+          {new Date(data.created).toLocaleDateString("cs-CZ")}
+          {" " + new Date(data.created).toLocaleTimeString()}
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,3 +1,17 @@
-.weather{
-    min-width: 12em;
+.weather {
+  min-width: 12em;
+}
+
+.mainText {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+.minorText {
+  font-size: 0.8em;
+}
+
+.text {
+  display: flex;
+  flex-flow: row;
 }
