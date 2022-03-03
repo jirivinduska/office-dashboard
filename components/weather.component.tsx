@@ -24,35 +24,35 @@ export const WeatherComponent: FunctionComponent<{}> = () => {
         <h3>Vnitřní teplota:</h3>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.indoorTemp}°C</div>
-          <div className={styles.minorText}> ↑{minMaxData.indoorTemp.values.max} ↓{minMaxData.indoorTemp.values.min}</div>
+          <div className={styles.minorText}> ↑{minMaxData.indoorTemp.values.max}°C ↓{minMaxData.indoorTemp.values.min}°C</div>
         </div>
       </div>
       <div>
         <h3>Venkovní teplota:</h3>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.outdoorTemp}°C</div>
-          <div className={styles.minorText}> ↑{minMaxData.outdoorTemp.values.max} ↓{minMaxData.outdoorTemp.values.min}</div>
+          <div className={styles.minorText}> ↑{minMaxData.outdoorTemp.values.max}°C ↓{minMaxData.outdoorTemp.values.min}°C</div>
         </div>
       </div>
       <div>
         <h3>Teplota procesoru:</h3>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.cpuTemp}°C</div>
-          <div className={styles.minorText}> ↑{minMaxData.cpuTemp.values.max} ↓{minMaxData.cpuTemp.values.min}</div>
+          <div className={styles.minorText}> ↑{minMaxData.cpuTemp.values.max}°C ↓{minMaxData.cpuTemp.values.min}°C</div>
         </div>
       </div>
       <div>
         <h3>Tlak:</h3>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.pressure}hPa</div>
-          <div className={styles.minorText}> ↑{minMaxData.pressure.values.max} ↓{minMaxData.pressure.values.min}</div>
+          <div className={styles.minorText}> ↑{minMaxData.pressure.values.max}hPa ↓{minMaxData.pressure.values.min}hPa</div>
         </div>
       </div>
       <div>
         <h3>Vlhkost:</h3>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.humidity}%</div>
-          <div className={styles.minorText}> ↑{minMaxData.humidity.values.max} ↓{minMaxData.humidity.values.min}</div>
+          <div className={styles.minorText}> ↑{minMaxData.humidity.values.max}% ↓{minMaxData.humidity.values.min}%</div>
         </div>
       </div>
       <div>
