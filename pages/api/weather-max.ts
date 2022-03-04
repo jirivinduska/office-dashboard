@@ -4,8 +4,6 @@ import { getOrCreateConnection } from "../../src/database/db";
 import { Weather } from "../../src/entity/weather.model";
 import {
   MaxMin,
-  MaxMinDate,
-  MaxMinNumber,
   WeatherMaxMinResponse,
 } from "../../src/interface/WeatherMaxReponse";
 import { findAll, findToday } from "../../src/repository/weather.repository";
@@ -18,24 +16,29 @@ export default async function handler(
   const dates = weather.map((w) => w.created);
 
   const humidity = getMaxMin(
-    weather.map((w) => w.humidity),
-    dates
+    weather.map((w) => {
+      return { value: w.humidity, date: w.created };
+    })
   );
   const pressure = getMaxMin(
-    weather.map((w) => w.pressure),
-    dates
+    weather.map((w) => {
+      return { value: w.humidity, date: w.created };
+    })
   );
   const cpuTemp = getMaxMin(
-    weather.map((w) => w.cpuTemp),
-    dates
+    weather.map((w) => {
+      return { value: w.humidity, date: w.created };
+    })
   );
   const indoorTemp = getMaxMin(
-    weather.map((w) => w.indoorTemp),
-    dates
+    weather.map((w) => {
+      return { value: w.humidity, date: w.created };
+    })
   );
   const outdoorTemp = getMaxMin(
-    weather.map((w) => w.outdoorTemp),
-    dates
+    weather.map((w) => {
+      return { value: w.humidity, date: w.created };
+    })
   );
 
   res.status(200).json({
@@ -48,30 +51,7 @@ export default async function handler(
   });
 }
 
-const getMaxMinNumber = (arr: number[]): MaxMinNumber => {
-  return { max: Math.max(...arr), min: Math.min(...arr) };
+const getMaxMin = (sub: { value: number; date: Date }[]): MaxMin => {
+  const sorted = sub.sort((sA, sB) => sA.value - sB.value);
+  return { min: sorted[0], max: sorted[sorted.length - 1] };
 };
-
-const getMaxMinDate = (
-  numberArr: number[],
-  dateArr: Date[],
-  min: number,
-  max: number
-): MaxMinDate => {
-  numberArr = numberArr.map((n) => Number(n));
-  const minIndex = numberArr.indexOf(min);
-  const minDate = dateArr[minIndex];
-  const maxIndex = numberArr.indexOf(max);
-  const maxDate = dateArr[maxIndex];
-  return { max: maxDate, min: minDate };
-};
-function getMaxMin(numArr: number[], dateArr: Date[]): MaxMin {
-  const minMaxNumber = getMaxMinNumber(numArr);
-  const minMaxDate = getMaxMinDate(
-    numArr,
-    dateArr,
-    minMaxNumber.min,
-    minMaxNumber.max
-  );
-  return { values: minMaxNumber, dates: minMaxDate };
-}
