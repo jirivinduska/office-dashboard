@@ -22,22 +22,22 @@ export default async function handler(
   );
   const pressure = getMaxMin(
     weather.map((w) => {
-      return { value: w.humidity, date: w.created };
+      return { value: w.pressure, date: w.created };
     })
   );
   const cpuTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.humidity, date: w.created };
+      return { value: w.cpuTemp, date: w.created };
     })
   );
   const indoorTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.humidity, date: w.created };
+      return { value: w.indoorTemp, date: w.created };
     })
   );
   const outdoorTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.humidity, date: w.created };
+      return { value: w.outdoorTemp, date: w.created };
     })
   );
 
