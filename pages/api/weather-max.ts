@@ -8,10 +8,7 @@ import {
 } from "../../src/interface/WeatherMaxReponse";
 import { findAll, findToday } from "../../src/repository/weather.repository";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<WeatherMaxMinResponse>
-) {
+export const getWeatherData = async () => {
   const weather = await findToday();
   const dates = weather.map((w) => w.created);
 
@@ -40,15 +37,21 @@ export default async function handler(
       return { value: w.outdoorTemp, date: w.created };
     })
   );
-
-  res.status(200).json({
+  return {
     indoorTemp: { ...indoorTemp },
     outdoorTemp: { ...outdoorTemp },
     cpuTemp: { ...cpuTemp },
     humidity: { ...humidity },
     pressure: { ...pressure },
     created: new Date(),
-  });
+  };
+};
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<WeatherMaxMinResponse>
+) {
+  const data = await getWeatherData();
+  res.status(200).json(data);
 }
 
 const getMaxMin = (sub: { value: number; date: Date }[]): MaxMin => {

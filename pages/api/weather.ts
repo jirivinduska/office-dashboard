@@ -4,11 +4,14 @@ import { Weather } from "../../src/entity/weather.model";
 import { ErrorResponse } from "../../src/interface/ErrorResponse";
 import { findLast } from "../../src/repository/weather.repository";
 
+export const getLastWeather = async () => {
+  return await findLast();
+};
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Weather | ErrorResponse>
 ) {
-  const lastWeather = await findLast();
+  const lastWeather = await getLastWeather();
 
   if (lastWeather) {
     res.status(200).json(lastWeather);
