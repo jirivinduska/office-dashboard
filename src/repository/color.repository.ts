@@ -1,19 +1,10 @@
-import { connect } from "http2";
-import { getOrCreateConnection } from "../database/db";
-import { Color } from "../entity/color.model";
+import { color } from "@prisma/client";
+import prisma from "../database/db";
 
-export const findLast = async (): Promise<Color | undefined> => {
-  return getOrCreateConnection().then((conn) => {
-    const repo = conn.getRepository<Color>("Color");
-    return repo.findOne({ order: { created: "DESC" } });
-  });
+export const findLast = async (): Promise<color | null | undefined> => {
+  return prisma.color.findFirst({ orderBy: { created: "desc" } });
 };
 
-export const addColor = async (
-  colorHex: string
-): Promise<Color> => {
-  return getOrCreateConnection().then((conn) => {
-    const repo = conn.getRepository<Color>("Color");
-    return repo.save({ colorHex: colorHex });
-  });
+export const addColor = async (colorHex: string): Promise<color> => {
+  return prisma.color.create({ data: { color_hex: colorHex } });
 };

@@ -1,11 +1,11 @@
 import axios from "axios";
 import { FunctionComponent, useCallback, useState } from "react";
 import useSWR from "swr";
-import { Color } from "../src/entity/color.model";
 import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import debounce from "lodash.debounce";
-const fetcher = (url: string) => axios.get<Color>(url).then((res) => res.data);
+import { color } from "@prisma/client";
+const fetcher = (url: string) => axios.get<color>(url).then((res) => res.data);
 const defaultColor = "#000000";
 
 export const ColorComponent: FunctionComponent<{}> = () => {
@@ -26,13 +26,13 @@ export const ColorComponent: FunctionComponent<{}> = () => {
   const sendColor = useCallback(
     debounce((colorHex: string) => {
       axios
-        .post<Color>("/api/color", {
+        .post<color>("/api/color", {
           color: colorHex,
         })
         .then((res) => {
           if (data) {
-            const newHex = res.data.colorHex;
-            mutate({ ...data, colorHex: newHex });
+            const newHex = res.data.color_hex;
+            mutate({ ...data, color_hex: newHex });
           }
         });
     }, 500),
@@ -41,7 +41,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
 
   const changeColor = (colorHex: string) => {
     if (data) {
-      mutate({ ...data, colorHex: colorHex }, false);
+      mutate({ ...data, color_hex: colorHex }, false);
       sendColor(colorHex);
     }
   };
@@ -50,7 +50,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
   if (error || !data) {
     color = defaultColor;
   } else {
-    color = data.colorHex;
+    color = data.color_hex!;
   }
   return (
     <>

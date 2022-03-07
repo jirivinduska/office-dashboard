@@ -1,34 +1,24 @@
+import { weather_measurement } from "@prisma/client";
 import { connect } from "http2";
-import { DataTypeNotSupportedError, MoreThan } from "typeorm";
-import { getOrCreateConnection } from "../database/db";
-import { Weather } from "../entity/weather.model";
+import prisma from "../database/db";
 
-export const findLast = async (): Promise<Weather | undefined> => {
-  return getOrCreateConnection().then((conn) => {
-    const repo = conn.getRepository<Weather>("Weather");
-    return repo.findOne({ order: { created: "DESC" } });
-  });
+export const findLast = async (): Promise<
+  weather_measurement | null | undefined
+> => {
+  return prisma.weather_measurement.findFirst({ orderBy: { created: "desc" } });
 };
 
-export const findAll = async (): Promise<Weather[]> => {
-  return getOrCreateConnection().then((conn) => {
-    const repo = conn.getRepository<Weather>("Weather");
-    return repo.find({ order: { created: "DESC" } });
-  });
+export const findAll = async (): Promise<weather_measurement[]> => {
+  return prisma.weather_measurement.findMany({ orderBy: { created: "desc" } });
 };
 
-export const findToday = async (): Promise<Weather[]> => {
-  return getOrCreateConnection().then((conn) => {
-    const repo = conn.getRepository<Weather>("Weather");
-    const today = new Date();
-    today.setHours(1); //ISO string moves hours -1
-    today.setMilliseconds(0);
-    today.setSeconds(0);
-    today.setMinutes(0);
-    return repo.find({
-      where: {
-        created: MoreThan(today.toISOString()),
-      },
-    });
+export const findToday = async (): Promise<weather_measurement[]> => {
+  const today = new Date();
+  today.setHours(0); 
+  today.setMilliseconds(0);
+  today.setSeconds(0);
+  today.setMinutes(0);
+  return prisma.weather_measurement.findMany({
+    where: { created: {gte: today} },
   });
 };

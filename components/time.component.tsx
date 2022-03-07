@@ -1,7 +1,8 @@
 import { useState, useEffect, FunctionComponent } from "react";
 import styles from "../styles/Time.module.css";
+import { NameDay, NameProps } from "./nameday.component";
 
-export const Time: FunctionComponent<{}> = () => {
+export const Time: FunctionComponent<NameProps> = (props) => {
   const [time, setTime] = useState(Date.now());
 
   useEffect(() => {
@@ -14,9 +15,10 @@ export const Time: FunctionComponent<{}> = () => {
 
   return (
     <>
-    <div className={styles.clock}>
-      <h3>{date.toLocaleDateString('cs-CZ')}</h3>
-      <h1>{date.toLocaleTimeString('cs-CZ')}</h1>
+      <div className={styles.clock}>
+        <div className={styles.date}>{date.toLocaleDateString("cs-CZ")}</div>
+        <NameDay date={props.date} name={props.name} />
+        <div className={styles.time}>{date.toLocaleTimeString("cs-CZ")}</div>
       </div>
     </>
   );

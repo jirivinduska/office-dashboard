@@ -1,3 +1,5 @@
+import { Decimal } from "@prisma/client/runtime";
+
 export interface WeatherMaxMinResponse {
   outdoorTemp: MaxMin;
   indoorTemp: MaxMin;
@@ -9,6 +11,6 @@ export interface WeatherMaxMinResponse {
 
 
 export type MaxMin = {
-  max: { value: number; date: Date };
-  min: { value: number; date: Date };
+  max: { value: Decimal; date: Date };
+  min: { value: Decimal; date: Date };
 };

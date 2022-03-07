@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model color {
+  id        BigInt   @id @default(autoincrement())
+  color_hex String?  @db.VarChar(255)
+  created   DateTime @default(now()) @db.Timestamp(0)
+}
+
+model weather_measurement {
+  indoor_temp  Decimal   @db.Decimal(6, 2)
+  outdoor_temp Decimal   @db.Decimal(6, 2)
+  cpu_temp     Decimal   @db.Decimal(6, 2)
+  pressure     Decimal   @db.Decimal(6, 2)
+  humidity     Decimal   @db.Decimal(6, 2)
+  created      DateTime? @default(now()) @db.Timestamp(0)
+  id           BigInt    @id @default(autoincrement())
+}

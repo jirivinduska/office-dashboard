@@ -1,27 +1,17 @@
-import { getConnection, createConnection } from "typeorm";
-import { Color } from "../entity/color.model";
-import { Weather } from "../entity/weather.model";
+import { PrismaClient } from "@prisma/client";
 
-export async function getOrCreateConnection() {
-    try {
-        const conn = getConnection();
-        if (!conn.isConnected) { 
-            await conn.connect();
-        }
-        return conn;
-    } catch (e) {
-        return createConnection({
-            type: "mysql",
-            host: process.env.MYSQL_HOST,
-            port: 3306,
-            username: process.env.MYSQL_USER,
-            password: process.env.MYSQL_PASSWORD,
-            database: process.env.MYSQL_DATABASE,
-            entities: [
-                Weather,Color
-            ],
-            logging: false,
-            timezone:'Z'
-        });
-    }
+let prisma: PrismaClient;
+
+if (process.env.NODE_ENV === "production") {
+  prisma = new PrismaClient();
+} else {
+  // @ts-ignore
+  if (!global.prisma) {
+    // @ts-ignore
+    global.prisma = new PrismaClient();
+  }
+  // @ts-ignore
+  prisma = global.prisma;
 }
+
+export default prisma;

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Weather } from "../../src/entity/weather.model";
 import { ErrorResponse } from "../../src/interface/ErrorResponse";
+import { Weather } from "../../src/interface/Weather";
 import { findLast } from "../../src/repository/weather.repository";
 
 export default async function handler(
