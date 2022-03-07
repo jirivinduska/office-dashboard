@@ -5,13 +5,19 @@ import { Color } from "../src/entity/color.model";
 import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import debounce from "lodash.debounce";
+import { GetStaticProps, GetStaticPropsResult } from "next";
+import { getLastColor } from "../pages/api/color";
 const fetcher = (url: string) => axios.get<Color>(url).then((res) => res.data);
 const defaultColor = "#000000";
 
-export const ColorComponent: FunctionComponent<{}> = () => {
-  const { data, error, mutate } = useSWR("/api/color", fetcher, {
-    refreshInterval: 5000,
-  });
+interface ColorProps {
+  colorHex?: string;
+}
+export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
+  // const { data, error, mutate } = useSWR("/api/color", fetcher, {
+  //   refreshInterval: 5000,
+  // });
+  const data = { colorHex: props.colorHex };
 
   const [showPicker, setShowPicker] = useState<boolean>(false);
 
@@ -32,7 +38,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
         .then((res) => {
           if (data) {
             const newHex = res.data.colorHex;
-            mutate({ ...data, colorHex: newHex });
+            // mutate({ ...data, colorHex: newHex });
           }
         });
     }, 500),
@@ -41,13 +47,13 @@ export const ColorComponent: FunctionComponent<{}> = () => {
 
   const changeColor = (colorHex: string) => {
     if (data) {
-      mutate({ ...data, colorHex: colorHex }, false);
+      //  mutate({ ...data, colorHex: colorHex }, false);
       sendColor(colorHex);
     }
   };
 
   let color;
-  if (error || !data) {
+  if (!data) {
     color = defaultColor;
   } else {
     color = data.colorHex;
@@ -59,7 +65,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
           backgroundColor: color,
           height: "200px",
           width: "200px",
-          borderRadius: "5px"
+          borderRadius: "5px",
         }}
         onClick={handleClick}
       ></div>
@@ -75,3 +81,16 @@ export const ColorComponent: FunctionComponent<{}> = () => {
     </>
   );
 };
+
+export const getStaticProps: GetStaticProps = async (
+  context
+): Promise<GetStaticPropsResult<ColorProps>> => {
+  const colorHex = await getLastColor();
+  if (!colorHex) {
+    throw new Error("No color found!");
+  }
+  return {
+    props: { colorHex: colorHex.colorHex },
+  };
+};
+export default ColorComponent;

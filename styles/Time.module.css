@@ -6,11 +6,13 @@
   flex-wrap: wrap;
   min-width: 20em;
 }
-.clock > h1 {
+.time {
+  margin: 0.2em;
   font-family: "Orbitron", sans-serif;
   font-size: 3.5em;
+  font-weight: bold;
 }
 
-.clock > h3 {
+.date {
   font-size: 2em;
 }

@@ -5,6 +5,10 @@ import { ColorRequest } from "../../src/interface/ColorRequest";
 import { ErrorResponse } from "../../src/interface/ErrorResponse";
 import { addColor, findLast } from "../../src/repository/color.repository";
 
+export const getLastColor = async () => {
+  return await findLast();
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Color | ErrorResponse>
@@ -21,7 +25,7 @@ export default async function handler(
       }
     }
   } else {
-    const lastColor = await findLast();
+    const lastColor = await getLastColor();
     if (lastColor) {
       res.status(200).json(lastColor);
     } else {
