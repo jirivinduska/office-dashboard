@@ -12,6 +12,7 @@ export interface ColorProps {
 
 export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
+  const [color, setColor] = useState<string>(props.colorHex);
 
   const handleClose = () => {
     setShowPicker(false);
@@ -31,6 +32,7 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
   );
 
   const changeColor = (colorHex: string) => {
+    setColor(colorHex);
     sendColor(colorHex);
   };
 
@@ -38,7 +40,7 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
     <>
       <div
         style={{
-          backgroundColor: props.colorHex,
+          backgroundColor: color,
           height: "200px",
           width: "200px",
           borderRadius: "5px",
@@ -49,7 +51,7 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
         <div className={styles.popover}>
           <div className={styles.cover} onClick={handleClose} />
           <ChromePicker
-            color={props.colorHex}
+            color={color}
             onChange={(color) => changeColor(color.hex)}
           />
         </div>
