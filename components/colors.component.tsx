@@ -4,7 +4,7 @@ import useSWR from "swr";
 import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import debounce from "lodash.debounce";
-import { Color, Settings, SettingsType } from "@prisma/client";
+import { Settings, SettingsType } from "@prisma/client";
 
 export interface ColorProps {
   colorHex: string;
