@@ -20,8 +20,7 @@ export default async function handler(
     await res.unstable_revalidate("/");
     return res.json({ revalidated: true });
   } catch (err) {
-    // If there was an error, Next.js will continue
-    // to show the last successfully generated page
+    console.log(err);
     //@ts-ignore
     return res.status(500).send({ message: err.message });
   }
