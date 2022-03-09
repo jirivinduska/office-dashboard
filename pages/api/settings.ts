@@ -22,6 +22,8 @@ export const getFirstName = async (): Promise<Settings | null> => {
   return lastName;
 };
 
+export const findLastColor = async (): Promise<Settings | null> => await findByType(SettingsType.COLOR_DASHBOARD);
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Settings | ErrorResponse>

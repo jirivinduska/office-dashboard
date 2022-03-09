@@ -1,0 +1,7 @@
+POST http://10.200.0.2/api/settings HTTP/1.1
+content-type: application/json
+
+{
+    "type": "WHO_IS_GOD",
+    "value": "Jiří"
+}

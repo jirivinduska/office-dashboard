@@ -12,8 +12,7 @@ import {
 import { WeatherMaxMinResponseString } from "../src/interface/WeatherString";
 import { findLast } from "../src/repository/weather.repository";
 import styles from "../styles/Home.module.css";
-import { findLastColor } from "./api/color";
-import { getFirstName } from "./api/settings";
+import { findLastColor, getFirstName } from "./api/settings";
 import { getMaxMinWeather } from "./api/weather-max";
 
 interface IndexProps {
@@ -60,7 +59,7 @@ export const getStaticProps: GetStaticProps = async (
   const color = await findLastColor();
   const weatherMinMax = await getMaxMinWeather();
 
-  if (!name || !weather || !color || !color.colorHex) {
+  if (!name || !weather || !color || !color.value) {
     throw Error("No data fetched!");
   }
 
@@ -132,7 +131,7 @@ export const getStaticProps: GetStaticProps = async (
     props: {
       name: { date: name.created.toDateString(), name: name.value },
       weather: { weather: weatherString, weatherMinMax: weatherMinMaxString },
-      color: { colorHex: color.colorHex },
+      color: { colorHex: color.value },
     },
   };
 };

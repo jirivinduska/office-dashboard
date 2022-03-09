@@ -7,13 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Color {
-  id       Int      @id @default(autoincrement())
-  colorHex String?  @db.VarChar(255)
-  created  DateTime @default(now())
-  updated  DateTime @updatedAt
-}
-
 model Weather {
   id          Int      @id @default(autoincrement())
   indoorTemp  Decimal  @db.Decimal(6, 2)
@@ -35,5 +28,8 @@ model Settings {
 enum SettingsType {
   FIRST_NAME
   WHO_IS_GOD
+  COLOR_DASHBOARD
+  COLOR_BELCA
+  COLOR_JIRI
   OTHER
 }

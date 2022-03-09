@@ -4,28 +4,28 @@ import useSWR from "swr";
 import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import debounce from "lodash.debounce";
-import { Color } from "@prisma/client";
+import { Color, Settings, SettingsType } from "@prisma/client";
 
 export interface ColorProps {
   colorHex: string;
 }
 
-const fetcher = (url: string) => axios.get<Color>(url).then((res) => res.data);
+const fetcher = (url: string) => axios.get<Settings>(url).then((res) => res.data);
 
 export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
   const {
     data: color,
     error,
     mutate,
-  } = useSWR("/api/color", fetcher, {
+  } = useSWR("/api/settings?type=COLOR_DASHBOARD", fetcher, {
     refreshInterval: 10000,
   });
   const [showPicker, setShowPicker] = useState<boolean>(false);
   let colorHex;
-  if (!color || error || !color.colorHex) {
+  if (!color || error || !color.value) {
     colorHex = props.colorHex;
   } else {
-    colorHex = color.colorHex;
+    colorHex = color.value;
   }
 
   const handleClose = () => {
@@ -39,12 +39,13 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
   const sendColor = useCallback(
     debounce((colorHex: string) => {
       axios
-        .post<Color>("/api/color", {
-          color: colorHex,
+        .post<Settings>("/api/settings", {
+          type: SettingsType.COLOR_DASHBOARD,
+          value: colorHex,
         })
         .then((res) => res.data)
         .then((color) => {
-          mutate(color);
+          mutate({...color, value: color.value});
         });
     }, 500),
     []
@@ -52,7 +53,7 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
 
   const changeColor = (colorHex: string) => {
     if (color) {
-      mutate({ ...color, colorHex: colorHex }, false);
+      mutate({ ...color, value: colorHex }, false);
       sendColor(colorHex);
     }
   };
