@@ -4,8 +4,8 @@ import { useState, useEffect, FunctionComponent } from "react";
 import styles from "../styles/Nameday.module.css";
 
 export interface NameProps {
-  date?: string;
-  name?: string;
+  date: string;
+  name: string;
 }
 
 export const NameDay: FunctionComponent<NameProps> = (props) => {

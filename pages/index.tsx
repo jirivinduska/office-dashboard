@@ -13,6 +13,7 @@ import { WeatherMaxMinResponseString } from "../src/interface/WeatherString";
 import { findLast } from "../src/repository/weather.repository";
 import styles from "../styles/Home.module.css";
 import { findLastColor } from "./api/color";
+import { getFirstName } from "./api/name";
 import { getMaxMinWeather } from "./api/weather-max";
 
 interface IndexProps {
@@ -53,15 +54,13 @@ const Home: NextPage<IndexProps> = (props) => {
 export const getStaticProps: GetStaticProps = async (
   context
 ): Promise<GetStaticPropsResult<IndexProps>> => {
-  const nameday = await axios
-    .get<NameProps[]>("https://svatky.adresa.info/json")
-    .then((data) => data.data[0]);
 
+  const name = await getFirstName()
   const weather = await findLast();
   const color = await findLastColor();
   const weatherMinMax = await getMaxMinWeather();
 
-  if (!nameday || !weather || !color || !color.colorHex) {
+  if (!name || !weather || !color || !color.colorHex) {
     throw Error("No data fetched!");
   }
 
@@ -131,7 +130,7 @@ export const getStaticProps: GetStaticProps = async (
   return {
     revalidate: 60,
     props: {
-      name: { date: nameday.date, name: nameday.name },
+      name: { date: name.created.toDateString(), name: name.value },
       weather: { weather: weatherString, weatherMinMax: weatherMinMaxString },
       color: { colorHex: color.colorHex },
     },

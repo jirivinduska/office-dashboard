@@ -15,11 +15,24 @@ model Color {
 }
 
 model Weather {
-  id          Int       @id @default(autoincrement())
-  indoorTemp  Decimal   @db.Decimal(6, 2)
-  outdoorTemp Decimal   @db.Decimal(6, 2)
-  cpuTemp     Decimal   @db.Decimal(6, 2)
-  pressure    Decimal   @db.Decimal(6, 2)
-  humidity    Decimal   @db.Decimal(6, 2)
-  created     DateTime  @default(now())
+  id          Int      @id @default(autoincrement())
+  indoorTemp  Decimal  @db.Decimal(6, 2)
+  outdoorTemp Decimal  @db.Decimal(6, 2)
+  cpuTemp     Decimal  @db.Decimal(6, 2)
+  pressure    Decimal  @db.Decimal(6, 2)
+  humidity    Decimal  @db.Decimal(6, 2)
+  created     DateTime @default(now())
+}
+
+model Settings {
+  id      Int          @id @default(autoincrement())
+  type    SettingsType @unique
+  value   String       @db.VarChar(255)
+  created DateTime     @default(now())
+  updated DateTime     @updatedAt
+}
+
+enum SettingsType {
+  FIRST_NAME
+  OTHER
 }
