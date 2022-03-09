@@ -2,13 +2,25 @@ import axios from "axios";
 import type { GetStaticProps, GetStaticPropsResult, NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { ColorComponent } from "../components/colors.component";
+import { ColorComponent, ColorProps } from "../components/colors.component";
 import { NameProps } from "../components/nameday.component";
 import { Time } from "../components/time.component";
-import { WeatherComponent } from "../components/weather.component";
+import {
+  WeatherComponent,
+  WeatherProps,
+} from "../components/weather.component";
+import { findLast } from "../src/repository/weather.repository";
 import styles from "../styles/Home.module.css";
+import { findLastColor } from "./api/color";
+import { getMaxMinWeather } from "./api/weather-max";
 
-const Home: NextPage<NameProps> = (props) => {
+interface IndexProps {
+  name: NameProps;
+  weather: WeatherProps;
+  color: ColorProps;
+}
+
+const Home: NextPage<IndexProps> = (props) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -20,13 +32,16 @@ const Home: NextPage<NameProps> = (props) => {
       <main className={styles.main}>
         <div className={styles.grid}>
           <div className={styles.card}>
-            <Time date={props.date} name={props.name} />
+            <Time date={props.name.date} name={props.name.name} />
           </div>
           <div className={styles.card}>
-            <WeatherComponent />
+            <WeatherComponent
+              weather={props.weather.weather}
+              weatherMinMax={props.weather.weatherMinMax}
+            />
           </div>
           <div className={styles.card}>
-            <ColorComponent />
+            <ColorComponent colorHex={props.color.colorHex} />
           </div>
         </div>
       </main>
@@ -36,18 +51,24 @@ const Home: NextPage<NameProps> = (props) => {
 
 export const getStaticProps: GetStaticProps = async (
   context
-): Promise<GetStaticPropsResult<NameProps>> => {
+): Promise<GetStaticPropsResult<IndexProps>> => {
   const nameday = await axios
     .get<NameProps[]>("https://svatky.adresa.info/json")
-    .then((data) => data.data);
-  if (!nameday[0]) {
-    throw Error("No Name fetched!");
+    .then((data) => data.data[0]);
+
+  const weather = await findLast();
+  const color = await findLastColor();
+  const weatherMinMax = await getMaxMinWeather();
+
+  if (!nameday || !weather || !color || !color.colorHex) {
+    throw Error("No data fetched!");
   }
+
   return {
-    revalidate: 60,
     props: {
-      date: nameday[0].date,
-      name: nameday[0].name,
+      name: { date: nameday.date, name: nameday.name },
+      weather: { weather: weather, weatherMinMax: weatherMinMax },
+      color: { colorHex: color.colorHex },
     },
   };
 };

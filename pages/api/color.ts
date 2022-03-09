@@ -1,14 +1,11 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { color } from "@prisma/client";
-import { identity } from "lodash";
+import { Color } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { Color } from "../../src/interface/Color";
 import { ColorRequest } from "../../src/interface/ColorRequest";
 import { ErrorResponse } from "../../src/interface/ErrorResponse";
 import { addColor, findLast } from "../../src/repository/color.repository";
 
-// @ts-ignore
-BigInt.prototype.toJSON = function() { return this.toString() }
+export const findLastColor = async (): Promise<Color | null> => await findLast();
 
 export default async function handler(
   req: NextApiRequest,
@@ -26,7 +23,7 @@ export default async function handler(
       }
     }
   } else {
-    const lastColor = await findLast();
+    const lastColor = await findLastColor();
     if (lastColor) {
       res.status(200).json(lastColor);
     } else {

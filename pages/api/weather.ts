@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { Weather } from "@prisma/client";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ErrorResponse } from "../../src/interface/ErrorResponse";
-import { Weather } from "../../src/interface/Weather";
 import { findLast } from "../../src/repository/weather.repository";
 
 export default async function handler(

@@ -5,19 +5,16 @@ import {
   MaxMin,
   WeatherMaxMinResponse,
 } from "../../src/interface/WeatherMaxReponse";
-import { findAll, findToday } from "../../src/repository/weather.repository";
+import { findToday } from "../../src/repository/weather.repository";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<WeatherMaxMinResponse>
-) {
+export const getMaxMinWeather = async (): Promise<WeatherMaxMinResponse> => {
   const weather = await findToday();
   const humidity = getMaxMin(
     weather.map((w) => {
       return { value: w.humidity, date: w.created! };
     })
   );
-  
+
   const pressure = getMaxMin(
     weather.map((w) => {
       return { value: w.pressure, date: w.created! };
@@ -25,28 +22,35 @@ export default async function handler(
   );
   const cpuTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.cpu_temp, date: w.created! };
+      return { value: w.cpuTemp, date: w.created! };
     })
   );
   const indoorTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.indoor_temp, date: w.created! };
+      return { value: w.indoorTemp, date: w.created! };
     })
   );
   const outdoorTemp = getMaxMin(
     weather.map((w) => {
-      return { value: w.outdoor_temp, date: w.created! };
+      return { value: w.outdoorTemp, date: w.created! };
     })
   );
-
-  res.status(200).json({
+  return {
     indoorTemp: { ...indoorTemp },
     outdoorTemp: { ...outdoorTemp },
     cpuTemp: { ...cpuTemp },
     humidity: { ...humidity },
     pressure: { ...pressure },
     created: new Date(),
-  });
+  };
+};
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse<WeatherMaxMinResponse>
+) {
+  const data = await getMaxMinWeather();
+
+  res.status(200).json(data);
 }
 
 const getMaxMin = (sub: { value: Decimal; date: Date }[]): MaxMin => {

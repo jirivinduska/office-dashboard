@@ -7,18 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model color {
-  id        BigInt   @id @default(autoincrement())
-  color_hex String?  @db.VarChar(255)
-  created   DateTime @default(now()) @db.Timestamp(0)
+model Color {
+  id       Int      @id @default(autoincrement())
+  colorHex String?  @db.VarChar(255)
+  created  DateTime @default(now())
+  updated  DateTime @updatedAt
 }
 
-model weather_measurement {
-  indoor_temp  Decimal   @db.Decimal(6, 2)
-  outdoor_temp Decimal   @db.Decimal(6, 2)
-  cpu_temp     Decimal   @db.Decimal(6, 2)
-  pressure     Decimal   @db.Decimal(6, 2)
-  humidity     Decimal   @db.Decimal(6, 2)
-  created      DateTime? @default(now()) @db.Timestamp(0)
-  id           BigInt    @id @default(autoincrement())
+model Weather {
+  id          Int       @id @default(autoincrement())
+  indoorTemp  Decimal   @db.Decimal(6, 2)
+  outdoorTemp Decimal   @db.Decimal(6, 2)
+  cpuTemp     Decimal   @db.Decimal(6, 2)
+  pressure    Decimal   @db.Decimal(6, 2)
+  humidity    Decimal   @db.Decimal(6, 2)
+  created     DateTime? @default(now())
 }

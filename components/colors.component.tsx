@@ -4,15 +4,13 @@ import useSWR from "swr";
 import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import debounce from "lodash.debounce";
-import { color } from "@prisma/client";
-const fetcher = (url: string) => axios.get<color>(url).then((res) => res.data);
-const defaultColor = "#000000";
+import { Color } from "@prisma/client";
 
-export const ColorComponent: FunctionComponent<{}> = () => {
-  const { data, error, mutate } = useSWR("/api/color", fetcher, {
-    refreshInterval: 5000,
-  });
+export interface ColorProps {
+  colorHex: string;
+}
 
+export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
   const [showPicker, setShowPicker] = useState<boolean>(false);
 
   const handleClose = () => {
@@ -25,41 +23,25 @@ export const ColorComponent: FunctionComponent<{}> = () => {
 
   const sendColor = useCallback(
     debounce((colorHex: string) => {
-      axios
-        .post<color>("/api/color", {
-          color: colorHex,
-        })
-        .then((res) => {
-          if (data) {
-            const newHex = res.data.color_hex;
-            mutate({ ...data, color_hex: newHex });
-          }
-        });
+      axios.post<Color>("/api/color", {
+        color: colorHex,
+      });
     }, 500),
     []
   );
 
   const changeColor = (colorHex: string) => {
-    if (data) {
-      mutate({ ...data, color_hex: colorHex }, false);
-      sendColor(colorHex);
-    }
+    sendColor(colorHex);
   };
 
-  let color;
-  if (error || !data) {
-    color = defaultColor;
-  } else {
-    color = data.color_hex!;
-  }
   return (
     <>
       <div
         style={{
-          backgroundColor: color,
+          backgroundColor: props.colorHex,
           height: "200px",
           width: "200px",
-          borderRadius: "5px"
+          borderRadius: "5px",
         }}
         onClick={handleClick}
       ></div>
@@ -67,7 +49,7 @@ export const ColorComponent: FunctionComponent<{}> = () => {
         <div className={styles.popover}>
           <div className={styles.cover} onClick={handleClose} />
           <ChromePicker
-            color={color}
+            color={props.colorHex}
             onChange={(color) => changeColor(color.hex)}
           />
         </div>
