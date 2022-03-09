@@ -54,6 +54,8 @@ export default async function handler(
 }
 
 const getMaxMin = (sub: { value: Decimal; date: Date }[]): MaxMin => {
-  const sorted = sub.sort((sA, sB) => Number(sA.value) - Number(sB.value));
+  const sorted = sub.sort(
+    (sA, sB) => sA.value.toNumber() - sB.value.toNumber()
+  );
   return { min: sorted[0], max: sorted[sorted.length - 1] };
 };
