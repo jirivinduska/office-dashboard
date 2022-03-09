@@ -26,9 +26,15 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Settings | ErrorResponse>
 ) {
-  const lastName = await getFirstName();
-  if (lastName) {
-    res.status(200).json(lastName);
+  let settings;
+  if (req.query.type) {
+    const type = req.query.type as SettingsType;
+    settings = await findByType(type);
+  } else {
+    settings = await getFirstName();
+  }
+  if (settings) {
+    res.status(200).json(settings);
   } else {
     res.status(500).json({ code: 500, message: "no color found" });
   }

@@ -34,5 +34,6 @@ model Settings {
 
 enum SettingsType {
   FIRST_NAME
+  WHO_IS_GOD
   OTHER
 }

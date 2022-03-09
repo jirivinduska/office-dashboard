@@ -13,7 +13,7 @@ import { WeatherMaxMinResponseString } from "../src/interface/WeatherString";
 import { findLast } from "../src/repository/weather.repository";
 import styles from "../styles/Home.module.css";
 import { findLastColor } from "./api/color";
-import { getFirstName } from "./api/name";
+import { getFirstName } from "./api/settings";
 import { getMaxMinWeather } from "./api/weather-max";
 
 interface IndexProps {
