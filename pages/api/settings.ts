@@ -26,20 +26,35 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Settings | ErrorResponse>
 ) {
-  let settings;
-  if (req.query.type) {
-    const type = req.query.type as SettingsType;
-    if (type in SettingsType) {
-      settings = await findByType(type);
+  if (req.method === "POST" && req.body) {
+    const settings = req.body as Partial<Settings>;
+    if (
+      settings.type &&
+      settings.value &&
+      settings.type in SettingsType &&
+      settings.type !== SettingsType.FIRST_NAME
+    ) {
+      const result = await updateByType(settings.type, settings.value);
+      res.status(200).json(result);
     } else {
-      settings = null;
+      res.status(404).json({ code: 404, message: "No settingsType found!" });
     }
   } else {
-    settings = await getFirstName();
-  }
-  if (settings) {
-    res.status(200).json(settings);
-  } else {
-    res.status(404).json({ code: 404, message: "No settings found!" });
+    let settings;
+    if (req.query.type) {
+      const type = req.query.type as SettingsType;
+      if (type in SettingsType) {
+        settings = await findByType(type);
+      } else {
+        settings = null;
+      }
+    } else {
+      settings = await getFirstName();
+    }
+    if (settings) {
+      res.status(200).json(settings);
+    } else {
+      res.status(404).json({ code: 404, message: "No settings found!" });
+    }
   }
 }
