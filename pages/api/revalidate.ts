@@ -22,6 +22,6 @@ export default async function handler(
   } catch (err) {
     console.log(err);
     //@ts-ignore
-    return res.status(500).send({ message: err.message });
+    return res.status(500).send({ message: err });
   }
 }
