@@ -9,6 +9,7 @@ import {
   WeatherComponent,
   WeatherProps,
 } from "../components/weather.component";
+import { WeatherMaxMinResponseString } from "../src/interface/WeatherString";
 import { findLast } from "../src/repository/weather.repository";
 import styles from "../styles/Home.module.css";
 import { findLastColor } from "./api/color";
@@ -64,10 +65,73 @@ export const getStaticProps: GetStaticProps = async (
     throw Error("No data fetched!");
   }
 
+  const weatherString = {
+    cpuTemp: weather.cpuTemp.toString(),
+    indoorTemp: weather.indoorTemp.toString(),
+    outdoorTemp: weather.outdoorTemp.toString(),
+    humidity: weather.humidity.toString(),
+    pressure: weather.pressure.toString(),
+    created: weather.created!.toString(),
+  };
+
+  const weatherMinMaxString: WeatherMaxMinResponseString = {
+    cpuTemp: {
+      max: {
+        value: weatherMinMax.cpuTemp.max.value.toNumber(),
+        date: weatherMinMax.cpuTemp.max.date.toString(),
+      },
+      min: {
+        value: weatherMinMax.cpuTemp.min.value.toNumber(),
+        date: weatherMinMax.cpuTemp.min.date.toString(),
+      },
+    },
+    indoorTemp: {
+      max: {
+        value: weatherMinMax.indoorTemp.max.value.toNumber(),
+        date: weatherMinMax.indoorTemp.max.date.toString(),
+      },
+      min: {
+        value: weatherMinMax.indoorTemp.min.value.toNumber(),
+        date: weatherMinMax.indoorTemp.min.date.toString(),
+      },
+    },
+    outdoorTemp: {
+      max: {
+        value: weatherMinMax.outdoorTemp.max.value.toNumber(),
+        date: weatherMinMax.outdoorTemp.max.date.toString(),
+      },
+      min: {
+        value: weatherMinMax.outdoorTemp.min.value.toNumber(),
+        date: weatherMinMax.outdoorTemp.min.date.toString(),
+      },
+    },
+    humidity: {
+      max: {
+        value: weatherMinMax.humidity.max.value.toNumber(),
+        date: weatherMinMax.humidity.max.date.toString(),
+      },
+      min: {
+        value: weatherMinMax.humidity.min.value.toNumber(),
+        date: weatherMinMax.humidity.min.date.toString(),
+      },
+    },
+    pressure: {
+      max: {
+        value: weatherMinMax.pressure.max.value.toNumber(),
+        date: weatherMinMax.pressure.max.date.toString(),
+      },
+      min: {
+        value: weatherMinMax.pressure.min.value.toNumber(),
+        date: weatherMinMax.pressure.min.date.toString(),
+      },
+    },
+    created: weatherMinMax.created.toString(),
+  };
+
   return {
     props: {
       name: { date: nameday.date, name: nameday.name },
-      weather: { weather: weather, weatherMinMax: weatherMinMax },
+      weather: { weather: weatherString, weatherMinMax: weatherMinMaxString },
       color: { colorHex: color.colorHex },
     },
   };
