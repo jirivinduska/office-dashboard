@@ -29,13 +29,17 @@ export default async function handler(
   let settings;
   if (req.query.type) {
     const type = req.query.type as SettingsType;
-    settings = await findByType(type);
+    if (type in SettingsType) {
+      settings = await findByType(type);
+    } else {
+      settings = null;
+    }
   } else {
     settings = await getFirstName();
   }
   if (settings) {
     res.status(200).json(settings);
   } else {
-    res.status(500).json({ code: 500, message: "no color found" });
+    res.status(404).json({ code: 404, message: "No settings found!" });
   }
 }
