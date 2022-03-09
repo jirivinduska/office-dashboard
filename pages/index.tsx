@@ -129,6 +129,7 @@ export const getStaticProps: GetStaticProps = async (
   };
 
   return {
+    revalidate: 60,
     props: {
       name: { date: nameday.date, name: nameday.name },
       weather: { weather: weatherString, weatherMinMax: weatherMinMaxString },
