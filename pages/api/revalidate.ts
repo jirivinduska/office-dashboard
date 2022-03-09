@@ -22,6 +22,7 @@ export default async function handler(
   } catch (err) {
     // If there was an error, Next.js will continue
     // to show the last successfully generated page
+    //@ts-ignore
     return res.status(500).send({ message: err.message });
   }
 }
