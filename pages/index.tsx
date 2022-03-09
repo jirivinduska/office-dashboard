@@ -71,61 +71,61 @@ export const getStaticProps: GetStaticProps = async (
     outdoorTemp: weather.outdoorTemp.toString(),
     humidity: weather.humidity.toString(),
     pressure: weather.pressure.toString(),
-    created: weather.created!.toString(),
+    created: weather.created!.toISOString(),
   };
 
   const weatherMinMaxString: WeatherMaxMinResponseString = {
     cpuTemp: {
       max: {
         value: weatherMinMax.cpuTemp.max.value.toNumber(),
-        date: weatherMinMax.cpuTemp.max.date.toString(),
+        date: weatherMinMax.cpuTemp.max.date.toISOString(),
       },
       min: {
         value: weatherMinMax.cpuTemp.min.value.toNumber(),
-        date: weatherMinMax.cpuTemp.min.date.toString(),
+        date: weatherMinMax.cpuTemp.min.date.toISOString(),
       },
     },
     indoorTemp: {
       max: {
         value: weatherMinMax.indoorTemp.max.value.toNumber(),
-        date: weatherMinMax.indoorTemp.max.date.toString(),
+        date: weatherMinMax.indoorTemp.max.date.toISOString(),
       },
       min: {
         value: weatherMinMax.indoorTemp.min.value.toNumber(),
-        date: weatherMinMax.indoorTemp.min.date.toString(),
+        date: weatherMinMax.indoorTemp.min.date.toISOString(),
       },
     },
     outdoorTemp: {
       max: {
         value: weatherMinMax.outdoorTemp.max.value.toNumber(),
-        date: weatherMinMax.outdoorTemp.max.date.toString(),
+        date: weatherMinMax.outdoorTemp.max.date.toISOString(),
       },
       min: {
         value: weatherMinMax.outdoorTemp.min.value.toNumber(),
-        date: weatherMinMax.outdoorTemp.min.date.toString(),
+        date: weatherMinMax.outdoorTemp.min.date.toISOString(),
       },
     },
     humidity: {
       max: {
         value: weatherMinMax.humidity.max.value.toNumber(),
-        date: weatherMinMax.humidity.max.date.toString(),
+        date: weatherMinMax.humidity.max.date.toISOString(),
       },
       min: {
         value: weatherMinMax.humidity.min.value.toNumber(),
-        date: weatherMinMax.humidity.min.date.toString(),
+        date: weatherMinMax.humidity.min.date.toISOString(),
       },
     },
     pressure: {
       max: {
         value: weatherMinMax.pressure.max.value.toNumber(),
-        date: weatherMinMax.pressure.max.date.toString(),
+        date: weatherMinMax.pressure.max.date.toISOString(),
       },
       min: {
         value: weatherMinMax.pressure.min.value.toNumber(),
-        date: weatherMinMax.pressure.min.date.toString(),
+        date: weatherMinMax.pressure.min.date.toISOString(),
       },
     },
-    created: weatherMinMax.created.toString(),
+    created: weatherMinMax.created.toISOString(),
   };
 
   return {
