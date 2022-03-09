@@ -10,9 +10,23 @@ export interface ColorProps {
   colorHex: string;
 }
 
+const fetcher = (url: string) => axios.get<Color>(url).then((res) => res.data);
+
 export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
+  const {
+    data: color,
+    error,
+    mutate,
+  } = useSWR("/api/color", fetcher, {
+    refreshInterval: 10000,
+  });
   const [showPicker, setShowPicker] = useState<boolean>(false);
-  const [color, setColor] = useState<string>(props.colorHex);
+  let colorHex;
+  if (!color || error || !color.colorHex) {
+    colorHex = props.colorHex;
+  } else {
+    colorHex = color.colorHex;
+  }
 
   const handleClose = () => {
     setShowPicker(false);
@@ -24,23 +38,30 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
 
   const sendColor = useCallback(
     debounce((colorHex: string) => {
-      axios.post<Color>("/api/color", {
-        color: colorHex,
-      });
+      axios
+        .post<Color>("/api/color", {
+          color: colorHex,
+        })
+        .then((res) => res.data)
+        .then((color) => {
+          mutate(color);
+        });
     }, 500),
     []
   );
 
   const changeColor = (colorHex: string) => {
-    setColor(colorHex);
-    sendColor(colorHex);
+    if (color) {
+      mutate({ ...color, colorHex: colorHex }, false);
+      sendColor(colorHex);
+    }
   };
 
   return (
     <>
       <div
         style={{
-          backgroundColor: color,
+          backgroundColor: colorHex,
           height: "200px",
           width: "200px",
           borderRadius: "5px",
@@ -51,7 +72,7 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
         <div className={styles.popover}>
           <div className={styles.cover} onClick={handleClose} />
           <ChromePicker
-            color={color}
+            color={colorHex}
             onChange={(color) => changeColor(color.hex)}
           />
         </div>
