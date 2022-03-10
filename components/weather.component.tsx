@@ -90,7 +90,7 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           <div className={styles.mainText}> {data.humidity}%</div>
           <div className={styles.minorText}>
             <div> ↑{minMaxData.humidity.max.value}%</div>
-            <div> ↓{minMaxData.humidity.min.value} </div>
+            <div> ↓{minMaxData.humidity.min.value}%</div>
           </div>
         </div>
       </div>
