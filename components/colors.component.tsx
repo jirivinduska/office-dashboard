@@ -5,6 +5,7 @@ import { ChromePicker } from "react-color";
 import styles from "../styles/Color.module.css";
 import { Settings, SettingsType } from "@prisma/client";
 import { nanoid } from "nanoid";
+import { useDebouncedCallback } from "use-debounce";
 
 export interface ColorProps {
   colorHex: string;
@@ -56,22 +57,25 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
     setShowPicker(!showPicker);
   };
 
-  const sendColor = (colorHex: string) => {
-    axios
-      .post<Settings>("/api/settings", {
-        type: select,
-        value: colorHex,
-      })
-      .then((res) => res.data)
-      .then((color) => {
-        mutate({ ...color, value: color.value });
-      });
-  };
+  const sendColor = useDebouncedCallback(
+    (colorHex: string, type: SettingsType) => {
+      axios
+        .post<Settings>("/api/settings", {
+          type: type,
+          value: colorHex,
+        })
+        .then((res) => res.data)
+        .then((color) => {
+          mutate({ ...color, value: color.value });
+        });
+    },
+    1000
+  );
 
   const changeColor = (colorHex: string) => {
     if (color) {
       mutate({ ...color, value: colorHex }, false);
-      sendColor(colorHex);
+      sendColor(colorHex, select);
     }
   };
 
@@ -110,7 +114,11 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
         >
           {" "}
           {pickers.map((key) => (
-            <option className={styles.option} key={key.id} value={key.settingsType}>
+            <option
+              className={styles.option}
+              key={key.id}
+              value={key.settingsType}
+            >
               {key.name}
             </option>
           ))}
