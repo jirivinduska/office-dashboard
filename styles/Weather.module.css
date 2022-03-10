@@ -1,4 +1,8 @@
 .weather {
+  display: flex;
+  flex-flow: column;
+  align-items: left;
+  justify-content: center;
   min-width: 12em;
 }
 
@@ -14,4 +18,17 @@
 .text {
   display: flex;
   flex-flow: row;
+}
+
+.title {
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.box {
+  margin: 1em 1em 0 0;
+}
+.bottom {
+  margin: 1em 1em 1em 0;
 }

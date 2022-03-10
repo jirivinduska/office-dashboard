@@ -44,8 +44,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
 
   return (
     <div className={styles.weather}>
-      <div>
-        <h3>Vnitřní teplota:</h3>
+      <div className={styles.box}>
+        <div className={styles.title}>Vnitřní teplota:</div>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.indoorTemp}°C</div>
           <div className={styles.minorText}>
@@ -55,8 +55,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <h3>Venkovní teplota:</h3>
+      <div className={styles.box}>
+        <div className={styles.title}>Venkovní teplota:</div>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.outdoorTemp}°C</div>
           <div className={styles.minorText}>
@@ -66,8 +66,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <h3>Teplota procesoru:</h3>
+      <div className={styles.box}>
+        <div className={styles.title}>Teplota procesoru:</div>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.cpuTemp}°C</div>
           <div className={styles.minorText}>
@@ -76,8 +76,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <h3>Tlak:</h3>
+      <div className={styles.box}>
+        <div className={styles.title}>Tlak:</div>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.pressure}hPa</div>
           <div className={styles.minorText}>
@@ -87,8 +87,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <h3>Vlhkost:</h3>
+      <div className={styles.box}>
+        <div className={styles.title}>Vlhkost:</div>
         <div className={styles.text}>
           <div className={styles.mainText}> {data.humidity}%</div>
           <div className={styles.minorText}>
@@ -97,8 +97,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
           </div>
         </div>
       </div>
-      <div>
-        <h3>Čas měření:</h3>
+      <div className={styles.bottom}>
+        <div className={styles.title}>Čas měření:</div>
         <div className={styles.mainText}>
           {dateFormat.toLocaleDateString("cs-CZ")}
           {" " + dateFormat.toLocaleTimeString("cs-CZ")}

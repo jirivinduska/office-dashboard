@@ -10,3 +10,23 @@
   bottom: 0px;
   right: 0px;
 }
+
+.picker {
+  width: 8em;
+  height: 2em;
+  margin: 1em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 1.5em;
+}
+
+.option{
+  font-size: 1em;
+}
+
+.color {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center;
+}

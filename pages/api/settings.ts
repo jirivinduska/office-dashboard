@@ -12,7 +12,7 @@ import {
 export const getFirstName = async (): Promise<Settings | null> => {
   const date = new Date();
   const lastName = await findByType(SettingsType.FIRST_NAME);
-  if (!lastName || date.getDate() > lastName.created.getDate()) {
+  if (!lastName || date.getDate() > lastName.updated.getDate()) {
     const nameday = await axios
       .get<NameProps[]>("https://svatky.adresa.info/json")
       .then((data) => data.data[0])

@@ -14,7 +14,7 @@ export const findToday = async (): Promise<Weather[]> => {
   today.setHours(0);
   today.setMilliseconds(0);
   today.setSeconds(0);
-  today.setMinutes(0);
+  today.setMinutes(today.getMinutes() + today.getTimezoneOffset());
   return prisma.weather.findMany({
     where: { created: { gte: today } },
   });
