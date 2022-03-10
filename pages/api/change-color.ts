@@ -16,7 +16,7 @@ export default async function handler(
   let data;
   const pass = process.env.PASSWORD;
   try {
-    data = await spawn("/home/jiri/Vyvoj/office-scripts/script");
+    data = await spawn("/home/pi/office-scripts/script");
     //"/home/pi/office-scripts/change-color.py"
     return res.status(200).json({ applied: true, output: data.toString() });
   } catch (err) {
