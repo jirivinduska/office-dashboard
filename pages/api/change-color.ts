@@ -14,18 +14,18 @@ export default async function handler(
   res: NextApiResponse<ChangeColorResult | ErrorResponse>
 ) {
   let data;
+  const pass = process.env.PASSWORD;
   try {
-    data = await spawn("python3", [
-      "/home/pi/office-scripts/change-color.py",
-    ]);
-
+    data = await spawn("/home/jiri/Vyvoj/office-scripts/script");
+    //"/home/pi/office-scripts/change-color.py"
     return res.status(200).json({ applied: true, output: data.toString() });
   } catch (err) {
+    console.log(err);
     return (
       res
         .status(404)
         //@ts-ignore
-        .json({ applied: false, output: err.stderr.toString() })
+        .json({ applied: false, output: "Error see in console!" })
     );
   }
 }
