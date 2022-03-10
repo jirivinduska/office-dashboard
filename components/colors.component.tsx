@@ -67,7 +67,8 @@ export const ColorComponent: FunctionComponent<ColorProps> = (props) => {
         .then((res) => res.data)
         .then((color) => {
           mutate({ ...color, value: color.value });
-        });
+        })
+        .then(() => axios.get("/api/change-color"));
     },
     1000
   );
