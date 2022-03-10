@@ -12,12 +12,16 @@
 }
 
 .minorText {
+  margin-left: 1em;
   font-size: 0.8em;
+  display: flex;
+  flex-flow: column;
 }
 
 .text {
   display: flex;
   flex-flow: row;
+  align-items: center;
 }
 
 .title {

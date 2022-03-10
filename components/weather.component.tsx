@@ -49,9 +49,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
         <div className={styles.text}>
           <div className={styles.mainText}> {data.indoorTemp}°C</div>
           <div className={styles.minorText}>
-            {" "}
-            ↑{minMaxData.indoorTemp.max.value}°C ↓
-            {minMaxData.indoorTemp.min.value}°C
+            <div>↑{minMaxData.indoorTemp.max.value}°C</div>
+            <div>↓{minMaxData.indoorTemp.min.value}°C</div>
           </div>
         </div>
       </div>
@@ -60,9 +59,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
         <div className={styles.text}>
           <div className={styles.mainText}> {data.outdoorTemp}°C</div>
           <div className={styles.minorText}>
-            {" "}
-            ↑{minMaxData.outdoorTemp.max.value}°C ↓
-            {minMaxData.outdoorTemp.min.value}°C
+            <div>↑{minMaxData.outdoorTemp.max.value}°C </div>
+            <div>↓{minMaxData.outdoorTemp.min.value}°C</div>
           </div>
         </div>
       </div>
@@ -71,8 +69,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
         <div className={styles.text}>
           <div className={styles.mainText}> {data.cpuTemp}°C</div>
           <div className={styles.minorText}>
-            {" "}
-            ↑{minMaxData.cpuTemp.max.value}°C ↓{minMaxData.cpuTemp.min.value}°C
+            <div>↑{minMaxData.cpuTemp.max.value}°C</div>
+            <div>↓{minMaxData.cpuTemp.min.value}°C</div>
           </div>
         </div>
       </div>
@@ -81,9 +79,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
         <div className={styles.text}>
           <div className={styles.mainText}> {data.pressure}hPa</div>
           <div className={styles.minorText}>
-            {" "}
-            ↑{minMaxData.pressure.max.value}hPa ↓{minMaxData.pressure.min.value}
-            hPa
+            <div>↑{minMaxData.pressure.max.value}hPa</div>
+            <div>↓{minMaxData.pressure.min.value}hPa</div>
           </div>
         </div>
       </div>
@@ -92,8 +89,8 @@ export const WeatherComponent: FunctionComponent<WeatherProps> = (props) => {
         <div className={styles.text}>
           <div className={styles.mainText}> {data.humidity}%</div>
           <div className={styles.minorText}>
-            {" "}
-            ↑{minMaxData.humidity.max.value}% ↓{minMaxData.humidity.min.value}%
+            <div> ↑{minMaxData.humidity.max.value}%</div>
+            <div> ↓{minMaxData.humidity.min.value} </div>
           </div>
         </div>
       </div>
