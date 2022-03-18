@@ -15,8 +15,8 @@ export const getFirstName = async (): Promise<Settings | null> => {
   if (!lastName || date.getDate() > lastName.updated.getDate()) {
     const nameday = await axios
       .get<NameProps[]>("https://svatky.adresa.info/json")
-      .then((data) => data.data[0])
-      .then((name) => updateByType(SettingsType.FIRST_NAME, name.name));
+      .then((data) => data.data)
+      .then((names) => updateByType(SettingsType.FIRST_NAME, names.map((name) => name.name).join(", ")));
     return findByType(SettingsType.FIRST_NAME);
   }
   return lastName;
