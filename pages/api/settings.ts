@@ -12,11 +12,21 @@ import {
 export const getFirstName = async (): Promise<Settings | null> => {
   const date = new Date();
   const lastName = await findByType(SettingsType.FIRST_NAME);
-  if (!lastName || date.getDate() > lastName.updated.getDate()) {
+  if (
+    !lastName ||
+    date.getDate() !== lastName.updated.getDate() ||
+    date.getMonth() !== lastName.updated.getMonth() ||
+    date.getFullYear() !== lastName.updated.getFullYear()
+  ) {
     const nameday = await axios
       .get<NameProps[]>("https://svatky.adresa.info/json")
       .then((data) => data.data)
-      .then((names) => updateByType(SettingsType.FIRST_NAME, names.map((name) => name.name).join(", ")));
+      .then((names) =>
+        updateByType(
+          SettingsType.FIRST_NAME,
+          names.map((name) => name.name).join(", ")
+        )
+      );
     return findByType(SettingsType.FIRST_NAME);
   }
   return lastName;
