@@ -11,7 +11,7 @@ export interface NameProps {
 export const NameDay: FunctionComponent<NameProps> = (props) => {
   return (
     <>
-      <div className={styles.name}>Dnes má svátek {props.name}</div>
+      <div className={styles.name}>Dnes má svátek <div className={styles.bold}>{props.name}</div></div>
     </>
   );
 };
