@@ -12,13 +12,8 @@ import {
 export const getFirstName = async (): Promise<Settings | null> => {
   const date = new Date();
   const lastName = await findByType(SettingsType.FIRST_NAME);
-  if (
-    !lastName ||
-    date.getDate() !== lastName.updated.getDate() ||
-    date.getMonth() !== lastName.updated.getMonth() ||
-    date.getFullYear() !== lastName.updated.getFullYear()
-  ) {
-    const nameday = await axios
+  if (!lastName || date.getDate() !== lastName.updated.getDate()) {
+    await axios
       .get<NameProps[]>("https://svatky.adresa.info/json")
       .then((data) => data.data)
       .then((names) =>
@@ -32,7 +27,8 @@ export const getFirstName = async (): Promise<Settings | null> => {
   return lastName;
 };
 
-export const findLastColor = async (): Promise<Settings | null> => await findByType(SettingsType.COLOR_DASHBOARD);
+export const findLastColor = async (): Promise<Settings | null> =>
+  await findByType(SettingsType.COLOR_DASHBOARD);
 
 export default async function handler(
   req: NextApiRequest,
